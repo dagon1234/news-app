@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from '../data.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-add-post',
@@ -12,8 +13,12 @@ export class AddPostComponent {
   constructor(private dataService: DataService) {}
 
   onSubmit(): void {
+    // Generate a unique ID (UUID) for the new post
+    const postId = uuidv4();
+
     // Create the postData object with the new post data
     const postData = {
+      id: postId,
       title: this.newPost.title,
       body: this.newPost.body
       // Add any other properties as needed
