@@ -31,11 +31,20 @@ export class DataService {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-  updatePost(post: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${post.id}`, post);
+  getPostById(id: number) {
+    return this.http.get(`${this.apiUrl}/posts/${id}`);
+  }
+
+  updatePost(postData: any) {
+    return this.http.put(`${this.apiUrl}/posts/${postData.id}`, postData);
   }
 
   deletePost(postId: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${postId}`);
+  }
+
+  addPost(postData: any): Observable<any> {
+    // Send an HTTP POST request to create a new post
+    return this.http.post<any>(this.apiUrl, postData);
   }
 }

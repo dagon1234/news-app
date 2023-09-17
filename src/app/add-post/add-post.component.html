@@ -1,13 +1,12 @@
-<!-- edit-post.component.html -->
 <div>
-  <h2>Edit Post</h2>
+  <h2>Add Post</h2>
   <form (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="title">Title:</label>
       <input
         type="text"
         id="title"
-        [(ngModel)]="post.title"
+        [(ngModel)]="newPost.title"
         name="title"
         required
       />
@@ -16,11 +15,11 @@
       <label for="body">Body:</label>
       <textarea
         id="body"
-        [(ngModel)]="post.body"
+        [(ngModel)]="newPost.body"
         name="body"
         required
       ></textarea>
     </div>
-    <button type="submit">Save Changes</button>
+    <button type="submit">Add Post</button>
   </form>
 </div>

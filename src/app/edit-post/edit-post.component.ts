@@ -1,3 +1,4 @@
+// edit-post.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
@@ -8,26 +9,36 @@ import { DataService } from '../data.service';
   styleUrls: ['./edit-post.component.css']
 })
 export class EditPostComponent implements OnInit {
-  post: any = { id: '', title: '', body: '' };
+  postId: number | any;
+  post: any = {};
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private dataService: DataService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    const postId = this.route.snapshot.paramMap.get('id');
-    if (postId) {
-      this.dataService.getPost(postId).subscribe((data: any) => {
-        this.post = data;
-      });
-    }
+    this.route.params.subscribe(params => {
+      this.postId = +params['id']; // Get the post ID from the route parameter and convert it to a number
+      this.fetchPostData(this.postId); // Fetch post data by ID
+    });
+  }
+
+  fetchPostData(postId: number): void {
+    this.dataService.getPostById(postId).subscribe(data => {
+      this.post = data;
+    });
   }
 
   onSubmit(): void {
-    this.dataService.updatePost(this.post).subscribe(() => {
-      this.router.navigate(['/posts']);
+    // Call your data service to update the post data in your JSON data source
+    this.dataService.updatePost(this.post).subscribe(response => {
+      // Handle success (e.g., show a success message)
+      this.router.navigate(['/posts']); // Redirect to the news page or the post detail page
+    }, error => {
+      // Handle error (e.g., display an error message)
+      console.error('Error updating post:', error);
     });
   }
 }
